@@ -2,7 +2,7 @@
 #include <string>
 namespace adas
 {
-    /* 汽车姿态 */
+    // 汽车姿态
     struct Pose
     {
         int x;        // x坐标
@@ -10,9 +10,8 @@ namespace adas
         char heading; // 'N', 'S', 'E', 'W' 代表四个方向
     };
 
-    /*
-     * 驾驶动作执行器接口
-     */
+    // 驾驶动作执行器接口
+
     class Executor
     {
     public:
@@ -33,7 +32,7 @@ namespace adas
     public:
         // 查询当前汽车姿态，纯虚函数，留给子类具体实现
         virtual Pose Query(void) const noexcept = 0;
-
+        // 新增加的纯虚函数，执行一个用字符串表示的指令序列，留给子类ExecutorImpl去实现
         virtual void Execute(const std::string &commands) noexcept = 0;
     };
 } // namespace adas

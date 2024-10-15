@@ -41,7 +41,7 @@ namespace adas
         ASSERT_EQ(target, executor->Query());
     }
 
-    //
+    // 测试用例3 测试测试Execute方法,在朝向为E,起点为(0,0)时去执行M指令是否正确
     TEST(ExecutorTest, should_return_x_plus_1_given_command_is_M_and_facing_is_E)
     {
         // given给定一个executor,调用executor的Execute方法去执行M指令
@@ -52,5 +52,38 @@ namespace adas
         // then
         const Pose target({1, 0, 'E'});       // 如果执行M指令正确，新的姿势应该是target：{1，0，'E'}
         ASSERT_EQ(target, executor->Query()); // 当M指令执行完，executor->Query（)返回的汽车姿势应该等于target：{1，0，'E'}
+    }
+
+    // 测试用例4 测试测试Execute方法,在朝向为W,起点为(0,0)时去执行M指令是否正确
+    TEST(ExecutorTest, should_return_x_minus_1_given_command_is_M_and_facing_is_W)
+    {
+        std::unique_ptr<Executor> executor(Executor::NewExecutor({0, 0, 'W'})); 
+       
+        executor->Execute("M");
+
+        const Pose target({-1, 0, 'W'});      
+        ASSERT_EQ(target, executor->Query()); 
+    }
+
+    // 测试用例5 测试测试Execute方法,在朝向为N,起点为(0,0)时去执行M指令是否正确
+    TEST(ExecutorTest, should_return_y_plus_1_given_command_is_M_and_facing_is_N)
+    {
+        std::unique_ptr<Executor> executor(Executor::NewExecutor({0, 0, 'N'}));
+
+        executor->Execute("M");
+
+        const Pose target({0, 1, 'N'});
+        ASSERT_EQ(target, executor->Query());
+    }
+
+    // 测试用例4 测试测试Execute方法,在朝向为S,起点为(0,0)时去执行M指令是否正确
+    TEST(ExecutorTest, should_return_y_minus_1_given_command_is_M_and_facing_is_S)
+    {
+        std::unique_ptr<Executor> executor(Executor::NewExecutor({0, 0, 'S'}));
+
+        executor->Execute("M");
+
+        const Pose target({0, -1, 'S'});
+        ASSERT_EQ(target, executor->Query());
     }
 }
