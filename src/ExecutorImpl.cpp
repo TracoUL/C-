@@ -4,7 +4,7 @@
 
 namespace adas
 {
-    ExecutorImpl::ExecutorImpl(const Pose &pose) noexcept : pose(pose) {}
+    ExecutorImpl::ExecutorImpl(const Pose &pose) noexcept : pose(pose), isFast(false) {}
 
     Pose ExecutorImpl::Query(void) const noexcept
     {
@@ -23,38 +23,66 @@ namespace adas
             // 如果是M指令
             if (cmd == 'M')
             {
-                // 如果是M指令，则需要根据当前汽车姿势的heading（朝向）决定如何移动车辆（重新计算坐标)
-                if (pose.heading == 'E')
-                    ++pose.x;
-                else if (pose.heading == 'W')
-                    --pose.x;
-                else if (pose.heading == 'N')
-                    ++pose.y;
-                else if (pose.heading == 'S')
-                    --pose.y;
+                Move();
             }
-            else if(cmd == 'L')
+            else if (cmd == 'L')
             {
-                if (pose.heading == 'E')
-                    pose.heading = 'N';
-                else if (pose.heading == 'W')
-                    pose.heading = 'S';
-                else if (pose.heading == 'N')
-                    pose.heading = 'W';
-                else if (pose.heading == 'S')
-                    pose.heading = 'E';
+                if (!isFast)
+                {
+                    if (pose.heading == 'E')
+                        pose.heading = 'N';
+                    else if (pose.heading == 'W')
+                        pose.heading = 'S';
+                    else if (pose.heading == 'N')
+                        pose.heading = 'W';
+                    else if (pose.heading == 'S')
+                        pose.heading = 'E';
+                }
+                else
+                {
+                }
             }
             else if (cmd == 'R')
             {
-                if (pose.heading == 'E')
-                    pose.heading = 'S';
-                else if (pose.heading == 'W')
-                    pose.heading = 'N';
-                else if (pose.heading == 'N')
-                    pose.heading = 'E';
-                else if (pose.heading == 'S')
-                    pose.heading = 'W';
+                if (!isFast)
+                {
+                    if (pose.heading == 'E')
+                        pose.heading = 'S';
+                    else if (pose.heading == 'W')
+                        pose.heading = 'N';
+                    else if (pose.heading == 'N')
+                        pose.heading = 'E';
+                    else if (pose.heading == 'S')
+                        pose.heading = 'W';
+                }
+                else
+                {
+                }
             }
+            else if(cmd == 'F')
+            {
+                isFast = !isFast;
+            }
+        }
+    }
+
+    void ExecutorImpl::Move() noexcept
+    {
+        if (pose.heading == 'E')
+        {
+            ++pose.x;
+        }
+        else if (pose.heading == 'W')
+        {
+            --pose.x;
+        }
+        else if (pose.heading == 'N')
+        {
+            ++pose.y;
+        }
+        else if (pose.heading == 'S')
+        {
+            --pose.y;
         }
     }
 }
