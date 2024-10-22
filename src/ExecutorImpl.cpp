@@ -20,28 +20,27 @@ namespace adas
     {
         for (const auto cmd : commands)
         {
+            std::unique_ptr<ICommand> cmder;
             // 如果是M指令
             if (cmd == 'M')
             {
-                // 智能指针指向MoveCommand实例，不用担心delete了
-                std::unique_ptr<MoveCommand> cmder = std::make_unique<MoveCommand>();
-                //*this就是ExecutorImpl实例对象，作为实参传递给DoOperate方法
-                cmder->DoOperate(*this); // 执行MoveCommand的DoOperate，即Move
+                cmder = std::make_unique<MoveCommand>();
             }
             else if (cmd == 'L')
             {
-                std::unique_ptr<TurnLeftCommand> cmder = std::make_unique<TurnLeftCommand>();
-                cmder->DoOperate(*this);
+                cmder = std::make_unique<TurnLeftCommand>();
             }
             else if (cmd == 'R')
             {
-                std::unique_ptr<TurnRightCommand> cmder = std::make_unique<TurnRightCommand>();
-                cmder->DoOperate(*this);
+                cmder = std::make_unique<TurnRightCommand>();
             }
             else if (cmd == 'F')
             {
                 isFast = !isFast;
             }
+
+            if (cmder)
+                cmder->DoOperate(*this);
         }
     }
 
