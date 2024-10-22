@@ -1,5 +1,5 @@
 #include "ExecutorImpl.hpp"
-
+#include <memory>
 #include <new>
 
 namespace adas
@@ -23,7 +23,10 @@ namespace adas
             // 如果是M指令
             if (cmd == 'M')
             {
-                Move();
+                // 智能指针指向MoveCommand实例，不用担心delete了
+                std::unique_ptr<MoveCommand> cmder = std::make_unique<MoveCommand>();
+                //*this就是ExecutorImpl实例对象，作为实参传递给DoOperate方法
+                cmder->DoOperate(*this); // 执行MoveCommand的DoOperate，即Move
             }
             else if (cmd == 'L')
             {
