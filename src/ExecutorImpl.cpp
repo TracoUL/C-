@@ -4,44 +4,11 @@
 
 namespace adas
 {
-    ExecutorImpl::ExecutorImpl(const Pose &pose) noexcept : pose(pose), isFast(false) {}
+    ExecutorImpl::ExecutorImpl(const Pose &pose) noexcept : pose(pose), fast(false) {}
 
     Pose ExecutorImpl::Query(void) const noexcept
     {
         return pose;
-    }
-
-    Executor *Executor::NewExecutor(const Pose &pose) noexcept
-    {
-        return new (std::nothrow) ExecutorImpl(pose);
-    }; // 只在C++17下有效
-
-    void ExecutorImpl::Execute(const std::string &commands) noexcept
-    {
-        for (const auto cmd : commands)
-        {
-            std::unique_ptr<ICommand> cmder;
-            // 如果是M指令
-            if (cmd == 'M')
-            {
-                cmder = std::make_unique<MoveCommand>();
-            }
-            else if (cmd == 'L')
-            {
-                cmder = std::make_unique<TurnLeftCommand>();
-            }
-            else if (cmd == 'R')
-            {
-                cmder = std::make_unique<TurnRightCommand>();
-            }
-            else if (cmd == 'F')
-            {
-                isFast = !isFast;
-            }
-
-            if (cmder)
-                cmder->DoOperate(*this);
-        }
     }
 
     void ExecutorImpl::Move() noexcept
@@ -87,4 +54,49 @@ namespace adas
         else if (pose.heading == 'S')
             pose.heading = 'W';
     }
+
+    void ExecutorImpl::Fast(void) noexcept
+    {
+        fast = !fast;
+    }
+
+    bool ExecutorImpl::IsFast(void) const noexcept
+    {
+        return fast;
+    }
+
+    Executor *Executor::NewExecutor(const Pose &pose) noexcept
+    {
+        return new (std::nothrow) ExecutorImpl(pose);
+    }; // 只在C++17下有效
+
+    void ExecutorImpl::Execute(const std::string &commands) noexcept
+    {
+        for (const auto cmd : commands)
+        {
+            std::unique_ptr<ICommand> cmder;
+            // 如果是M指令
+            if (cmd == 'M')
+            {
+                cmder = std::make_unique<MoveCommand>();
+            }
+            else if (cmd == 'L')
+            {
+                cmder = std::make_unique<TurnLeftCommand>();
+            }
+            else if (cmd == 'R')
+            {
+                cmder = std::make_unique<TurnRightCommand>();
+            }
+            else if (cmd == 'F')
+            {
+                cmder = std::make_unique<FastCommand>();
+            }
+
+            if (cmder)
+                cmder->DoOperate(*this);
+        }
+    }
+
+    
 }
