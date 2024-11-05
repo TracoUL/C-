@@ -1,5 +1,6 @@
 #pragma once
 #include "ExecutorImpl.hpp"
+#include "PoseHandler.hpp"
 
 namespace adas
 {
@@ -7,7 +8,7 @@ namespace adas
     {
     public:
         // 请在这里给出析构函数和纯虚函数DoOperate的声明
-        virtual void DoOperate(ExecutorImpl &executor) const noexcept = 0;
+        virtual void DoOperate(PoseHandler &poseHandler) const noexcept = 0;
         virtual ~ICommand() = default;
     };
 
@@ -15,48 +16,48 @@ namespace adas
     {
     public:
         // 执行Move动作，需要委托ExecutorImp&执行器来完成动作
-        void DoOperate(ExecutorImpl &executor) const noexcept override
+        void DoOperate(PoseHandler &poseHandler) const noexcept override
         {
-            if (executor.IsFast())
+            if (poseHandler.IsFast())
             {
-                executor.Move();
+                poseHandler.Move();
             }
-            executor.Move();
+            poseHandler.Move();
         }
     };
 
     class TurnLeftCommand final : public ICommand
     {
     public:
-        void DoOperate(ExecutorImpl &executor) const noexcept override
+        void DoOperate(PoseHandler &poseHandler) const noexcept override
         {
-            if (executor.IsFast())
+            if (poseHandler.IsFast())
             {
-                executor.Move();
+                poseHandler.Move();
             }
-            executor.TurnLeft();
+            poseHandler.TurnLeft();
         }
     };
 
     class TurnRightCommand final : public ICommand
     {
     public:
-        void DoOperate(ExecutorImpl &executor) const noexcept override
+        void DoOperate(PoseHandler &poseHandler) const noexcept override
         {
-            if (executor.IsFast())
+            if (poseHandler.IsFast())
             {
-                executor.Move();
+                poseHandler.Move();
             }
-            executor.TurnRight();
+            poseHandler.TurnRight();
         }
     };
 
     class FastCommand final : public ICommand
     {
     public:
-        void DoOperate(ExecutorImpl &executor) const noexcept override
+        void DoOperate(PoseHandler &poseHandler) const noexcept override
         {
-            executor.Fast();
+            poseHandler.Fast();
         }
     };
 }

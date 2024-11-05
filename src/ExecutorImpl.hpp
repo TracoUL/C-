@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Executor.hpp"
+#include "PoseHandler.hpp"
 #include <string>
 
 namespace adas
@@ -31,15 +32,6 @@ namespace adas
 
         // 以上函数在cpp中实现
     private:
-        // 私有数据成员，汽车当前姿态
-        Pose pose;
-        bool fast{false}; // 记录是否处于加速状态
-
-    public:
-        void Move(void) noexcept;
-        void TurnLeft(void) noexcept;
-        void TurnRight(void) noexcept;
-        void Fast(void) noexcept;         // 切换加速状态
-        bool IsFast(void) const noexcept; // 查询当前是否处于加速状态
+        PoseHandler poseHandler; // 状态管理类
     };
 }
