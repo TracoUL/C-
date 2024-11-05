@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Executor.hpp"
+#include "Direction.hpp"
 
 namespace adas
 {
@@ -21,7 +22,8 @@ namespace adas
         Pose Query(void) const noexcept;  // 查询当前位置
 
     private:
-        Pose pose;        // 当前位置
+        Point point;
+        const Direction *facing;
         bool fast{false}; // 是否处于快速状态
     };
 
