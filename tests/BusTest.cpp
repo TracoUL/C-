@@ -66,7 +66,7 @@ namespace adas
     // 测试输入：BL
     TEST_F(BusTest, should_return_x_minus_1_and_facing_S_given_command_is_BL_and_facing_is_E)
     {
-        executor->Execute("");
+        executor->Execute("BL");
         const Pose target{-1, 0, 'S'};
         ASSERT_EQ(target, executor->Query());
     }

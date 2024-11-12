@@ -74,7 +74,7 @@ namespace adas
     TEST_F(SportsCartTest, should_return_x_plus_1_y_plus_1_and_facing_N_given_command_is_FL_and_facing_is_E)
     {
         executor->Execute("FL");
-        const Pose target{1, 1, 'E'};
+        const Pose target{1, 1, 'N'};
         ASSERT_EQ(target, executor->Query());
     }
 
