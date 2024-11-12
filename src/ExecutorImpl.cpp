@@ -1,8 +1,8 @@
 #include "ExecutorImpl.hpp"
 // #include "Command.hpp"
 
-#include "CmderFactory.hpp"
-#include "Singleton.hpp"
+#include "cmder\CmderFactory.hpp"
+#include "core\Singleton.hpp"
 
 #include <algorithm>
 // #include <memory>
