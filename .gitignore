@@ -23,3 +23,6 @@ cmake-build-debug
 *.iws
 *.iml
 *.ipr
+
+*.rar
+*.zip
