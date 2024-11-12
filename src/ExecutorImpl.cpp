@@ -18,7 +18,7 @@ namespace adas
         return poseHandler.Query();
     }
 
-    Executor *Executor::NewExecutor(const Pose &pose) noexcept
+    Executor *Executor::NewExecutor(const Pose &pose, const ExecutorType executorType) noexcept
     {
         return new (std::nothrow) ExecutorImpl(pose);
     }; // 只在C++17下有效
