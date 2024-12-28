@@ -2,20 +2,20 @@
 
 #include "Executor.hpp"
 #include "core\PoseHandler.hpp"
-#include"cmder\CmderOrchestrator.hpp"
-#include<memory>
+#include "cmder\CmderOrchestrator.hpp"
+#include <memory>
 #include <string>
 
 namespace adas
 {
-    /*
-     * Executor的具体实现
-     */
+
+    //  Executor的具体实现
+
     class ExecutorImpl final : public Executor
     {
     public:
         // 构造函数
-        explicit ExecutorImpl(const Pose &pose,  CmderOrchestrator *orchestrator) noexcept;
+        explicit ExecutorImpl(const Pose &pose, CmderOrchestrator *orchestrator) noexcept;
         // 默认析构函数
         ~ExecutorImpl() noexcept = default;
 

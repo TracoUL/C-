@@ -10,7 +10,7 @@ namespace adas
         char heading; // 'N', 'S', 'E', 'W' 代表四个方向
     };
 
-//车辆类型
+    // 车辆类型
     enum class ExecutorType
     {
         NORMAL,

@@ -45,33 +45,9 @@ namespace adas
 
         return new (std::nothrow) ExecutorImpl(pose, orchestrator);
     }; // 只在C++17下有效
-
     void ExecutorImpl::Execute(const std::string &commands) noexcept
     {
-        // 表驱动
-        // std::unordered_map<char, std::function<void(PoseHandler & poseHandler)>> cmderMap;
-        // cmderMap.emplace('M', MoveCommand());
-        // cmderMap.emplace('L', TurnLeftCommand());
-        // cmderMap.emplace('R', TurnRightCommand());
-        // cmderMap.emplace('F', FastCommand());
-
-        // const std::unordered_map<char, std::function<void(PoseHandler & poseHandler)>> cmderMap{
-        //     {'M', MoveCommand()},
-        //     {'L', TurnLeftCommand()},
-        //     {'R', TurnRightCommand()},
-        //     {'F', FastCommand()},
-        //     {'B', ReverseCommand()}};
-
-        // for (const auto cmd : commands)
-        // {
-        //     const auto it = cmderMap.find(cmd);
-        //     if (it != cmderMap.end())
-        //     {
-        //         it->second(poseHandler);
-        //     }
-        // }
-
-        const auto cmders = Singleton<CmderFactory>::Instance().GetCmders(commands);
+        const auto cmders = Singleton<CmderFactory>::Instance().GetCmders(commands); // 使用指令工厂获取指令字符串对应的操作列表
 
         std::for_each(
             cmders.begin(),
